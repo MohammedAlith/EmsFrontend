@@ -1,0 +1,212 @@
+
+/* General Styles */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+nav {
+  width: 100%;
+  display: block;
+}
+
+.bg-dark {
+  background-color: red !important;
+}
+
+.navbar-brand {
+  font-weight: 900; 
+}
+
+.navbar {
+  width: 100%;
+}
+
+/* Overall container */
+.container {
+ 
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  margin: 10px auto;  
+}
+
+/* Responsive Table */
+.table {
+  width: 100%;
+ 
+  /* overflow-x: auto;  */
+  display: block;
+  max-width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 2px solid black;
+  padding: 10px;
+  text-align: center;
+  white-space: nowrap; /* Prevents text from breaking */
+}
+
+/* Update Page */
+.updatePage {
+  width: 100%;
+  padding: 30px;
+  
+}
+
+label {
+  margin-right: 220px;
+}
+
+/* Card */
+.card {
+  background-color: bisque;
+  border: 2px solid brown;
+  padding: 20px;
+  width: 100%;
+  min-width: 350px; 
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* Default show page Content */
+.showPage {
+  text-align: center;
+}
+
+/* Heading */
+h2 {
+  color: crimson;
+  font-weight: bolder;
+  font-size: xx-large;
+  margin-bottom: 20px;
+}
+
+/*  Responsive Styles */
+
+/* Large Screens (Min-width: 769px) */
+@media screen and (min-width: 769px) {
+  table {
+    margin-left: 500px;
+  }
+}
+
+/* Tablets & Large Phones (481px - 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .navbar {
+    width: 100vw;
+  }
+
+  .container {
+    margin-top: 30px;
+    padding: 10px;
+  }
+
+  .updatePage {
+    padding: 20px;
+    margin: 30px auto;
+   
+  }
+
+  table {
+    margin-left: 0;
+  }
+
+  .table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  th, td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .card {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: x-large;
+    margin-bottom: 15px;
+  }
+}
+
+/* Mobile Phones (Max-width: 480px) */
+@media screen and (max-width: 480px) {
+  .navbar {
+    width: 100vw;
+  }
+
+  .container {
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: large;
+  }
+
+  table {
+    margin-left: 0;
+  }
+
+  th, td {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .updatePage {
+    padding: 10px;
+    margin: 20px auto;
+  }
+
+  .card {
+    max-width: 100%;
+    padding: 12px;
+  }
+}
+
+/* Very Small Phones (Max-width: 320px) */
+@media screen and (max-width: 320px) {
+  .navbar {
+    width: 100vw;
+  }
+
+  .container {
+    margin-top: 10px;
+    padding: 5px;
+  }
+
+  .table {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  h2 {
+    font-size: medium;
+  }
+
+  th, td {
+    font-size: 10px;
+    padding: 3px;
+  }
+
+  .updatePage {
+    padding: 5px;
+    margin: 10px auto;
+  }
+
+  .card {
+    max-width: 100%;
+    padding: 10px;
+  }
+}

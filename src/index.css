@@ -1,0 +1,10 @@
+body {
+  background: url("https://burst.shopifycdn.com/photos/teamwork-makes-the-dream-work.jpg?width=1000&format=pjpg&exif=0&iptc=0") no-repeat center center fixed;
+  background-size: cover; 
+  min-height: 100vh; /* Allows scrolling */
+  filter: brightness(100%);
+  margin: 0;
+  padding: 0;
+  overflow-x:hidden;
+  backdrop-filter: grayscale(80%);
+}
