@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../App.css'; // Ensure this file has the updated styles
+import '../App.css';
 import { deleteEmployee, listEmployees } from '../Services/EmployeeService';
 
 const ListOfEmployee = () => {
@@ -41,12 +41,13 @@ const ListOfEmployee = () => {
 
   return (
     <div className="container showPage">
-      <h2 className="title">List of Employees</h2>
+      <h2>List of Employees</h2>
       <button className="btn btn-primary mb-3" onClick={addNewEmployee}>
         Add Employee
       </button>
 
-      <div className="table-responsive">
+      {/* Responsive Table Container */}
+     
         <table className="table table-striped">
           <thead>
             <tr>
@@ -62,22 +63,23 @@ const ListOfEmployee = () => {
                 <td>{employee.id}</td>
                 <td>{employee.name}</td>
                 <td>{employee.email}</td>
-                <td>
-                  <div className="action-buttons">
-                    <button className="btn btn-info" onClick={() => updateEmployee(employee.id)}>
-                      Update
-                    </button>
-                    <button className="btn btn-danger" onClick={() => removeEmployee(employee.id)}>
-                      Delete
-                    </button>
-                  </div>
+                <td className="action-buttons">
+                  <button className="btn btn-info" onClick={() => updateEmployee(employee.id)}>
+                    Update
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => removeEmployee(employee.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </div>
+  
   );
 };
 
