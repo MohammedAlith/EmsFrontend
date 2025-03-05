@@ -1,252 +1,125 @@
-
 /* General Styles */
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-nav {
-  width: 100%;
-  display: block;
+  font-family: Arial, sans-serif;
 }
 
-.bg-dark {
-  background-color: red !important;
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  flex-wrap: wrap;
 }
 
 .navbar-brand {
-  font-weight: 900; 
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+  white-space: nowrap;
 }
 
-.navbar {
-  width: 100%;
+.navbar-nav {
+  display: flex;
+  gap: 10px;
 }
 
-/* Overall container */
+.navbar-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 5px 10px;
+}
+
+
 .container {
- 
-  padding: 0 15px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  margin: 10px auto;  
+  align-items: center;
+  max-width: 700px;
+  margin: auto;
+}
+
+/* Card Styling */
+.card {
+  background-color: wheat;
+  border: 2px solid #ccc;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: red;
+  font-weight: bold;
+  font-size: 28px;
+  margin-bottom: 15px;
 }
 
 /* Responsive Table */
-.table {
-  width: 100%;
- 
-  /* overflow-x: auto;  */
-  display: block;
-  max-width: 100%;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
 }
 
 th, td {
-  border: 2px solid black;
+  border: 1px solid #ccc;
   padding: 10px;
   text-align: center;
-  white-space: nowrap; /* Prevents text from breaking */
+}
+/* Button Styling */
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-right: 5px;
 }
 
-/* Update Page */
-.updatePage {
-  width: 100%;
-  padding: 30px;
-  
+
+
+button:hover {
+  opacity: 0.8;
 }
 
-label {
-  margin-right: 220px;
-}
 
-/* Card */
-.card {
-  background-color: bisque;
-  border: 2px solid brown;
-  padding: 20px;
-  width: 100%;
-  min-width: 350px; 
-  text-align: center;
-  border-radius: 10px;
-}
 
-/* Default show page Content */
-.showPage {
-  text-align: center;
-}
 
-/* Heading */
-h2 {
-  color: crimson;
-  font-weight: bolder;
-  font-size: xx-large;
-  margin-bottom: 20px;
-}
-
-/*  Responsive Styles */
-
-/* Large Screens (Min-width: 769px) */
-@media screen and (min-width: 769px) {
-  table {
-    margin-left: 500px;
-  }
-}
-
-/* Tablets & Large Phones (481px - 768px) */
-@media screen and (min-width: 481px) and (max-width: 768px) {
-  .navbar {
-    width: 100vw;
-  }
-
+@media (max-width: 576px) {
   .container {
-    margin-top: 30px;
+    width: 100%;
     padding: 10px;
   }
 
-  .updatePage {
-    padding: 20px;
-    margin: 30px auto;
-   
-  }
-
   table {
-    margin-left: 0;
-  }
-
-  .table {
     display: block;
     width: 100%;
     overflow-x: auto;
+    white-space: nowrap;
   }
-
-  th, td {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  .card {
-    max-width: 90%;
-    padding: 15px;
-  }
-
-  h2 {
-    font-size: x-large;
-    margin-bottom: 15px;
-  }
-}
-
-/* Mobile Phones (Max-width: 480px) */
-@media screen and (max-width: 480px) {
-  .navbar {
-    width: 100vw;
-  }
-
-  .container {
-    margin-top: 20px;
-    padding: 10px;
-  }
-
-  h2 {
-    font-size: large;
-  }
-
-  table {
-    margin-left: 0;
-  }
-
-  th, td {
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  .updatePage {
-    padding: 10px;
-    margin: 20px auto;
-  }
-
-  .card {
-    max-width: 100%;
-    padding: 12px;
-  }
-}
-
-/* Very Small Phones (Max-width: 320px) */
-@media screen and (max-width: 320px) {
-  .navbar {
-    width: 100vw;
-  }
-
-  .container {
-    margin-top: 10px;
-    padding: 5px;
-  }
-
-  .table {
-    width: 100%;
-    overflow-x: auto;
-  }
-
-  h2 {
-    font-size: medium;
-  }
-
-  th, td {
-    font-size: 10px;
-    padding: 3px;
-  }
-
-  .updatePage {
-    padding: 5px;
-    margin: 10px auto;
-  }
-
-  .card {
-    max-width: 100%;
-    padding: 10px;
-  }
-}
-@media screen and (max-width: 300px) {
-  .navbar {
-    width: 100%;
-    padding: 5px;
+  .action-buttons {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
   }
-
-  .container {
+  
+  .action-buttons button {
     width: 100%;
-    padding: 5px;
-    margin-top: 5px;
   }
+}
 
-  .table {
-    width: 100%;
-    overflow-x: auto;
-    display: block;
-  }
-
+@media (max-width: 320px) {
   h2 {
-    font-size: 0.9rem;
-  }
-
-  th, td {
-    font-size: 9px;
-    padding: 2px;
-  }
-
-  .card {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-  }
-
-  .updatePage {
-    padding: 5px;
-    margin: 5px auto;
+    font-size: 30px;
   }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import '../App.css'
+import '../App.css';
 import { createEmployee, getEmployee, updateEmployee } from '../Services/EmployeeService';
 
 const EmployeeComponent = () => {
@@ -61,19 +61,28 @@ function validateForm(){
 
   const errorsCopy = {... errors}
 
-  if(name.trim()){
+  const nameRegex = /^[A-Za-z][A-Za-z\s]{3,}$/;
+  if (name.trim() && nameRegex.test(name.trim())) {
     errorsCopy.name = '';
-  }else {
-    errorsCopy.name = 'Name is required';
+  } else {
+    errorsCopy.name = 'Name must start with a letter, contain only alphabets & spaces, and be at least 4 characters long.';
     valid = false;
   }
 
-  if(email.trim()){
-    errorsCopy.email = '';
-  }else {
-    errorsCopy.email = 'Email is required';
-    valid = false;
-  }
+
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (email.trim()) {
+      if (!emailPattern.test(email)) {
+        errorsCopy.email = 'Invalid email format';
+        valid = false;
+      } else {
+        errorsCopy.email = '';
+      }
+    } else {
+      errorsCopy.email = 'Email is required';
+      valid = false;
+    }
+
 
   setErrors(errorsCopy);
   return valid;
@@ -126,7 +135,13 @@ return (
                   ></input>
                   {errors.email && <div className='invalid-feedback'> {errors.email}</div>}
                 </div>
-    <button className='btn btn-success'onClick={saveOrUpdateEmployee} >Submit</button>           
+                <button 
+  className='btn btn-success' 
+  onClick={saveOrUpdateEmployee} 
+  disabled={!name.trim() || !email.trim() || errors.name || errors.email}
+> 
+  {id ? 'Update' : 'Submit'}
+</button>         
               </form>
             </div>
           </div>
