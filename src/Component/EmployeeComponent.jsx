@@ -5,74 +5,75 @@ import { createEmployee, getEmployee, updateEmployee } from '../Services/Employe
 
 const EmployeeComponent = () => {
 
-const[name, setName] = useState('')
-const[email, setEmail] = useState('')
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
-const {id} = useParams();
+  const { id } = useParams();
 
-const[errors, setErrors] = useState({
-  name: '',
-  email: ''
-})
+  const [errors, setErrors] = useState({
+    name: '',
+    email: ''
+  });
 
-const navigator = useNavigate();
+  const navigator = useNavigate();
 
-useEffect(() => {
+  useEffect(() => {
+    if (id) {
+      getEmployee(id)
+        .then((response) => {
+          setName(response.data.name);
+          setEmail(response.data.email);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [id]);
 
-  if(id){
-    getEmployee(id).then((response) => {
-      setName(response.data.name);
-      setEmail(response.data.email);
-    }).catch(error => {
-      console.error(error);
-    })
-  }
-},[id])
+  function saveOrUpdateEmployee(e) {
+    e.preventDefault();
 
+    if (validateForm(name, email)) {
+      const employee = { name, email };
+      console.log(employee);
 
-function saveOrUpdateEmployee(e){
-  e.preventDefault();
-
-  if(validateForm()){
-    const employee = {name,email}
-  console.log(employee);
-
-   if(id){
-    updateEmployee(id, employee).then((response) => {
-      console.log(response.data);
-      navigator('/employees')
-    }).catch(error =>{
-      console.log(error);
-    })
-   } else {
-    createEmployee(employee).then((response) => {
-      console.log(response.data);
-      navigator('/employees')
-    }).catch(error => {
-      console.error(error);
-    })
-}
-  
-  }
-}
-
-function validateForm(){
-  let valid = true;
-
-  const errorsCopy = {... errors}
-
-  const nameRegex = /^[A-Za-z][A-Za-z\s]{3,}$/;
-  if (name.trim() && nameRegex.test(name.trim())) {
-    errorsCopy.name = '';
-  } else {
-    errorsCopy.name = 'Name must start with a letter, contain only alphabets & spaces, and be at least 4 characters long.';
-    valid = false;
+      if (id) {
+        updateEmployee(id, employee)
+          .then((response) => {
+            console.log(response.data);
+            navigator('/employees');
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        createEmployee(employee)
+          .then((response) => {
+            console.log(response.data);
+            navigator('/employees');
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    }
   }
 
+  function validateForm(nameInput = name, emailInput = email) {
+    let valid = true;
+    const errorsCopy = { ...errors };
 
-  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (email.trim()) {
-      if (!emailPattern.test(email)) {
+    const nameRegex = /^[A-Za-z][A-Za-z\s]{3,}$/;
+    if (nameInput.trim() && nameRegex.test(nameInput.trim())) {
+      errorsCopy.name = '';
+    } else {
+      errorsCopy.name = 'Name must start with a letter, contain only alphabets & spaces, and be at least 4 characters long.';
+      valid = false;
+    }
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (emailInput.trim()) {
+      if (!emailPattern.test(emailInput.trim())) {
         errorsCopy.email = 'Invalid email format';
         valid = false;
       } else {
@@ -83,73 +84,72 @@ function validateForm(){
       valid = false;
     }
 
-
-  setErrors(errorsCopy);
-  return valid;
-}
-
-
-function pageTitle(){
-  if(id){
-    return <h2 className='text-center'>Update Employee</h2>
-  }else{
-    return <h2 className='text-center'>Add Employee</h2>
+    setErrors(errorsCopy);
+    return valid;
   }
-}
 
+  function pageTitle() {
+    return (
+      <h2 className='text-center' style={{ color: 'red', fontWeight: 'bold' }}>
+        {id ? 'Update Employee' : 'Add Employee'}
+      </h2>
+    );
+  }
 
-return (
+  return (
     <div>
-      
-       <div className='container updatePage'>
-      
+      <div className='container updatePage'>
         <div className='row'>
           <div className='card col-md-4 offset-md-3 offset-md-3'>
-            {
-              pageTitle()
-            }
+            {pageTitle()}
             <div className='card-body'>
               <form>
                 <div className='form-group mb-2'>
                   <label className='form-label'>Name</label>
-                  <input 
+                  <input
                     type='text'
                     placeholder='Enter Employee Name'
                     name='name'
                     value={name}
-                    className={`form-control ${errors.name ? 'is-invalid':''}`}
-                    onChange={(e) => setName(e.target.value)}
-                  ></input>
-                  {errors.name && <div className='invalid-feedback'> {errors.name}</div>}
+                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      validateForm(e.target.value, email);
+                    }}
+                  />
+                  {errors.name && <div className='invalid-feedback'>{errors.name}</div>}
                 </div>
 
                 <div className='form-group mb-2'>
                   <label className='form-label'>Email</label>
-                  <input 
+                  <input
                     type='text'
                     placeholder='Enter Email'
                     name='email'
                     value={email}
-                    className={`form-control ${errors.email ? 'is-invalid':''}`}
-                    onChange={(e) =>setEmail(e.target.value)}
-                  ></input>
-                  {errors.email && <div className='invalid-feedback'> {errors.email}</div>}
+                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      validateForm(name, e.target.value);
+                    }}
+                  />
+                  {errors.email && <div className='invalid-feedback'>{errors.email}</div>}
                 </div>
-                <button 
-  className='btn btn-success' 
-  onClick={saveOrUpdateEmployee} 
-  disabled={!name.trim() || !email.trim() || errors.name || errors.email}
-> 
-  {id ? 'Update' : 'Submit'}
-</button>         
+
+                <button
+                  className='btn btn-success'
+                  onClick={saveOrUpdateEmployee}
+                  disabled={!name.trim() || !email.trim() || errors.name || errors.email}
+                >
+                  {id ? 'Update' : 'Submit'}
+                </button>
               </form>
             </div>
           </div>
         </div>
-       </div>
-
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default EmployeeComponent
+export default EmployeeComponent;
