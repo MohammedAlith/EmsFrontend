@@ -4,31 +4,31 @@ import '../App.css';
 import { createEmployee, getEmployee, updateEmployee } from '../Services/EmployeeService';
 
 const EmployeeComponent = () => {
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-
-  const { id } = useParams();
-
   const [errors, setErrors] = useState({
     name: '',
     email: ''
   });
 
+  const { id } = useParams();
   const navigator = useNavigate();
 
   useEffect(() => {
     if (id) {
-      getEmployee(id)
-        .then((response) => {
-          setName(response.data.name);
-          setEmail(response.data.email);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      getEmployee(id).then((response) => {
+        setName(response.data.name);
+        setEmail(response.data.email);
+      }).catch(error => {
+        console.error(error);
+      });
     }
   }, [id]);
+
+  // 🧠 Real-time validation effect
+  useEffect(() => {
+    validateForm(name, email);
+  }, [name, email]);
 
   function saveOrUpdateEmployee(e) {
     e.preventDefault();
@@ -38,33 +38,29 @@ const EmployeeComponent = () => {
       console.log(employee);
 
       if (id) {
-        updateEmployee(id, employee)
-          .then((response) => {
-            console.log(response.data);
-            navigator('/employees');
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        updateEmployee(id, employee).then((response) => {
+          console.log(response.data);
+          navigator('/employees');
+        }).catch(error => {
+          console.log(error);
+        });
       } else {
-        createEmployee(employee)
-          .then((response) => {
-            console.log(response.data);
-            navigator('/employees');
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        createEmployee(employee).then((response) => {
+          console.log(response.data);
+          navigator('/employees');
+        }).catch(error => {
+          console.error(error);
+        });
       }
     }
   }
 
-  function validateForm(nameInput = name, emailInput = email) {
+  function validateForm(currentName = name, currentEmail = email) {
     let valid = true;
     const errorsCopy = { ...errors };
 
     const nameRegex = /^[A-Za-z][A-Za-z\s]{3,}$/;
-    if (nameInput.trim() && nameRegex.test(nameInput.trim())) {
+    if (currentName.trim() && nameRegex.test(currentName.trim())) {
       errorsCopy.name = '';
     } else {
       errorsCopy.name = 'Name must start with a letter, contain only alphabets & spaces, and be at least 4 characters long.';
@@ -72,8 +68,8 @@ const EmployeeComponent = () => {
     }
 
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (emailInput.trim()) {
-      if (!emailPattern.test(emailInput.trim())) {
+    if (currentEmail.trim()) {
+      if (!emailPattern.test(currentEmail)) {
         errorsCopy.email = 'Invalid email format';
         valid = false;
       } else {
@@ -89,11 +85,7 @@ const EmployeeComponent = () => {
   }
 
   function pageTitle() {
-    return (
-      <h2 className='text-center' style={{ color: 'red', fontWeight: 'bold' }}>
-        {id ? 'Update Employee' : 'Add Employee'}
-      </h2>
-    );
+    return <h2 className='text-center'>{id ? 'Update Employee' : 'Add Employee'}</h2>;
   }
 
   return (
@@ -112,10 +104,7 @@ const EmployeeComponent = () => {
                     name='name'
                     value={name}
                     className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                      validateForm(e.target.value, email);
-                    }}
+                    onChange={(e) => setName(e.target.value)}
                   />
                   {errors.name && <div className='invalid-feedback'>{errors.name}</div>}
                 </div>
@@ -128,10 +117,7 @@ const EmployeeComponent = () => {
                     name='email'
                     value={email}
                     className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      validateForm(name, e.target.value);
-                    }}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   {errors.email && <div className='invalid-feedback'>{errors.email}</div>}
                 </div>
@@ -139,7 +125,12 @@ const EmployeeComponent = () => {
                 <button
                   className='btn btn-success'
                   onClick={saveOrUpdateEmployee}
-                  disabled={!name.trim() || !email.trim() || errors.name || errors.email}
+                  disabled={
+                    !name.trim() ||
+                    !email.trim() ||
+                    errors.name !== '' ||
+                    errors.email !== ''
+                  }
                 >
                   {id ? 'Update' : 'Submit'}
                 </button>
