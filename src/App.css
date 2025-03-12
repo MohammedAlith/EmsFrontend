@@ -92,7 +92,11 @@ button:hover {
   opacity: 0.8;
 }
 
-
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
 
 
 @media (max-width: 576px) {

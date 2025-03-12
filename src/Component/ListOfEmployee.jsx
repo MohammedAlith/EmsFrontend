@@ -87,7 +87,7 @@ const ListOfEmployee = () => {
               <td>{employee.id}</td>
               <td>{employee.name}</td>
               <td>{employee.email}</td>
-              <td className="action-buttons d-flex gap-2">
+              <td className="action-buttons">
                 <button className="btn btn-info" onClick={() => updateEmployee(employee.id)}>
                   Update
                 </button>
