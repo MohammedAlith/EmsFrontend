@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import { deleteEmployee, listEmployees } from '../Services/EmployeeService';
 
@@ -87,7 +87,7 @@ const ListOfEmployee = () => {
               <td>{employee.id}</td>
               <td>{employee.name}</td>
               <td>{employee.email}</td>
-              <td className="action-buttons">
+              <td className="action-buttons d-flex gap-2">
                 <button className="btn btn-info" onClick={() => updateEmployee(employee.id)}>
                   Update
                 </button>

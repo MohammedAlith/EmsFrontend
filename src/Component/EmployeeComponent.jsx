@@ -25,7 +25,7 @@ const EmployeeComponent = () => {
     }
   }, [id]);
 
-  // 🧠 Real-time validation effect
+  //  Real-time validation effect
   useEffect(() => {
     validateForm(name, email);
   }, [name, email]);
