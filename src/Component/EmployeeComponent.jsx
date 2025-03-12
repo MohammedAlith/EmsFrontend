@@ -138,7 +138,7 @@ return (
                 <button 
   className='btn btn-success' 
   onClick={saveOrUpdateEmployee} 
-  disabled={!name.trim() && !email.trim() && errors.name && errors.email}
+  disabled={!name.trim() || !email.trim() || errors.name || errors.email}
 > 
   {id ? 'Update' : 'Submit'}
 </button>         
