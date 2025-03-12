@@ -134,6 +134,13 @@ const EmployeeComponent = () => {
                 >
                   {id ? 'Update' : 'Submit'}
                 </button>
+                <button 
+                  className='btn btn-secondary'
+                  onClick={() => navigator('/employees')}
+                  >
+                  Cancel
+                  </button>
+                
               </form>
             </div>
           </div>
